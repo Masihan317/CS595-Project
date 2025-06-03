@@ -25,7 +25,8 @@ const Summarization = () => {
   };
 
   const handleSummarize = async () => {
-    const response = await fetch("/api/summarize", {
+    console.log("Sending to API:", inputText);
+    const response = await fetch("https://cs595-project.onrender.com/api/summarize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: inputText }),
