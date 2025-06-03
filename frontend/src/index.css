@@ -1,0 +1,14 @@
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .layout-grid {
+    grid-template-columns: 300px 1fr;
+  }
+
+  .sidebar {
+    height: 100vh;
+  }
+}
