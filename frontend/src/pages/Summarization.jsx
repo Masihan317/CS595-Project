@@ -7,6 +7,7 @@ import pdfToText from "../utils/pdfToText";
 
 const Summarization = () => {
   const [inputText, setInputText] = useState("");
+  const [summary, setSummary] = useState("")
   const fileInputRef = useRef(null);
 
   const handleUploadClick = () => {
@@ -21,6 +22,18 @@ const Summarization = () => {
     } else {
       alert("Please upload a valid PDF file.")
     }
+  };
+
+  const handleSummarize = async () => {
+    const response = await fetch("/api/summarize", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: inputText }),
+    });
+    const data = await response.json();
+    console.log(data)
+    console.log(data.summary)
+    setSummary(data.summary);
   };
 
   return (
@@ -49,7 +62,10 @@ const Summarization = () => {
                   Upload Doc
                 </Button>
               </div>
-              <Button className="btn btn-primary d-flex align-items-center gap-2">
+              <Button 
+                className="btn btn-primary d-flex align-items-center gap-2"
+                onClick={handleSummarize}
+              >
                 <HiOutlineDocumentDuplicate size={20} />
                 Summarize
               </Button>
@@ -60,7 +76,7 @@ const Summarization = () => {
           <Form>
             <Form.Group className="mb-2" controlId="output">
               <Form.Label as='h4'>Summary Output</Form.Label>
-              <Form.Control as="textarea" plaintext readOnly rows={20} />
+              <Form.Control as="textarea" plaintext readOnly rows={20} value={summary} onChange={(e) => setSummary(e.target.value)}/>
             </Form.Group>
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center"></div>
