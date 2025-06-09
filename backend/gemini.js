@@ -27,3 +27,27 @@ export async function summarizeWithGemini(prompt) {
     throw new Error("Gemini API call failed");
   }
 }
+
+export async function generateFlashcards(prompt) {
+  try {
+    const res = await axios.post(
+      `${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`,
+      {
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+
+    const output = res.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    return output || "No flashcards returned.";
+  } catch (err) {
+    console.error("Gemini flashcard error:", err.response?.data || err.message);
+    throw new Error("Gemini Flashcard API call failed");
+  }
+}
