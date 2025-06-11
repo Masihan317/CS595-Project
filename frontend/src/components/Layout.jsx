@@ -1,6 +1,10 @@
 import Sidebar from "./Sidebar"
 import "../index.css"
 import Summarization from "../pages/Summarization"
+import Home from "../pages/Home"
+import Flashcards from "../pages/Flashcards"
+import Chatbot from "../pages/Chatbot"
+import { Route, Routes } from "react-router-dom";
 
 const Layout = () => {
   return (
@@ -9,7 +13,12 @@ const Layout = () => {
         <Sidebar />
       </div>
       <div className="main">
-        <Summarization />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/summarization" element={<Summarization />} />
+          <Route path="/flashcards" element={<Flashcards />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+        </Routes>
       </div>
     </div>
   )

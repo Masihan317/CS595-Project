@@ -2,7 +2,6 @@ import { Nav, Navbar } from 'react-bootstrap';
 import { PiSmileyWinkBold } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { PiCardsThree } from "react-icons/pi";
-import { MdOutlineQuiz } from "react-icons/md";
 import { TbMessageChatbot } from "react-icons/tb";
 
 const Sidebar = () => {
@@ -21,10 +20,6 @@ const Sidebar = () => {
         <Nav.Link href="/flashcards" className="link-dark d-flex align-items-center w-100">
           <PiCardsThree size={20} className="me-2" />
           Flashcards Generator
-        </Nav.Link>
-        <Nav.Link href="/quizzes" className="link-dark d-flex align-items-center w-100">
-          <MdOutlineQuiz size={20} className="me-2" />
-          Quiz Generator
         </Nav.Link>
         <Nav.Link href="/chatbot" className="link-dark d-flex align-items-center w-100">
           <TbMessageChatbot size={20} className="me-2" />
