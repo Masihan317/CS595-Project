@@ -5,6 +5,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { FaCopy, FaFileExport } from "react-icons/fa";
 import pdfToText from "../utils/pdfToText";
+import exportTextAsTxt from "../utils/exportTextAsTxt";
 
 const Summarization = () => {
   const [inputText, setInputText] = useState("");
@@ -26,15 +27,12 @@ const Summarization = () => {
   };
 
   const handleSummarize = async () => {
-    console.log("Sending to API:", inputText);
     const response = await fetch("https://cs595-project.onrender.com/api/summarize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text: inputText }),
     });
     const data = await response.json();
-    console.log(data)
-    console.log(data.summary)
     setSummary(data.summary);
   };
 
@@ -49,6 +47,10 @@ const Summarization = () => {
     } catch (err) {
       alert("Failed to Copy Summary.")
     }
+  }
+
+  const handleExport = () => {
+    exportTextAsTxt(summary, "ai-summary.txt");
   }
 
   return (
@@ -102,7 +104,7 @@ const Summarization = () => {
                   <FaCopy size={16}/>
                   Copy
                 </Button>
-                <Button className="btn ms-2 btn-success d-flex align-items-center gap-2">
+                <Button className="btn ms-2 btn-success d-flex align-items-center gap-2" onClick={handleExport}>
                   <FaFileExport size={16}/>
                   Export
                 </Button>
