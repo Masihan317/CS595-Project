@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
+import { FaCopy, FaFileExport } from "react-icons/fa";
 import pdfToText from "../utils/pdfToText";
 
 const Summarization = () => {
@@ -37,6 +38,19 @@ const Summarization = () => {
     setSummary(data.summary);
   };
 
+  const handleCopy = async () => {
+    try {
+      if (summary) {
+        await navigator.clipboard.writeText(summary)
+        alert("AI Summary Copied to Clipboard Successfully!")
+      } else {
+        alert("No Summary to Copy.")
+      }
+    } catch (err) {
+      alert("Failed to Copy Summary.")
+    }
+  }
+
   return (
     <div className="container">
       <div className="row p-4">
@@ -56,7 +70,7 @@ const Summarization = () => {
                   style={{ display: "none" }}
                 />
                 <Button
-                  className="btn btn-secondary d-flex align-items-center gap-2"
+                  className="btn btn-warning d-flex align-items-center gap-2"
                   onClick={handleUploadClick}
                 >
                   <AiOutlineCloudUpload size={20} />
@@ -80,8 +94,19 @@ const Summarization = () => {
               <Form.Control as="textarea" plaintext readOnly rows={20} value={summary} onChange={(e) => setSummary(e.target.value)}/>
             </Form.Group>
             <div className="d-flex align-items-center justify-content-between">
-              <div className="d-flex align-items-center"></div>
-              <div className="d-flex align-items-center"></div>
+              <div className="d-flex align-items-center py-2">
+                <span>1000</span>&nbsp;<span>words</span>
+              </div>
+              <div className="d-flex align-items-center">
+                <Button className="btn btn-danger d-flex align-items-center gap-2" onClick={handleCopy}>
+                  <FaCopy size={16}/>
+                  Copy
+                </Button>
+                <Button className="btn ms-2 btn-success d-flex align-items-center gap-2">
+                  <FaFileExport size={16}/>
+                  Export
+                </Button>
+              </div>
             </div>
           </Form>
         </div>
