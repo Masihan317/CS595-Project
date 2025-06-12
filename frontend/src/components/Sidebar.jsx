@@ -1,5 +1,4 @@
 import { Nav, Navbar } from 'react-bootstrap';
-import { PiSmileyWinkBold } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { PiCardsThree } from "react-icons/pi";
 import { TbMessageChatbot } from "react-icons/tb";
@@ -15,8 +14,8 @@ const Sidebar = () => {
   return (
     <div className="d-flex flex-column flex-shrink-0 p-3 bg-light h-100">
       <Navbar.Brand href="/" className="d-flex align-items-center link-dark text-decoration-none">
-        <PiSmileyWinkBold size={32} className="me-2" />
-        <span className="fs-4">AI Study Buddy</span>
+        <img src="/favicon.png" alt="favicon" height="32px" width="32px"></img>
+        <span className="fs-4 ms-1">AI Study Buddy</span>
       </Navbar.Brand>
       <hr />
       <Nav variant="pills" className="flex-column mb-auto align-items-start">
