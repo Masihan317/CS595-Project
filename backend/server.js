@@ -1,5 +1,3 @@
-console.log(process.env.GEMINI_API_KEY)
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors"
@@ -21,9 +19,7 @@ router.post("/summarize", async (req, res) => {
   if (!text) return res.status(400).json({ error: "Text is required" });
 
   try {
-    console.log("here")
     const summary = await summarizeWithGemini(`Summarize this: ${text}`);
-    console.log(summary)
     res.json({ summary });
   } catch (err) {
     res.status(500).json({ error: err.message });
