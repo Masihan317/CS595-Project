@@ -71,10 +71,10 @@ const Summarization = () => {
   }
 
   return (
-    <div className="container">
-      <div className="row p-4">
-        <div className="col-lg-6 bg-light">
-          <Form>
+    <div className="container-fluid">
+      <div className="row pt-3">
+        <div className="col-lg-6">
+          <Form id="text-input" className="bg-light rounded px-3 py-2">
             <Form.Group className="mb-2" controlId="input">
               <Form.Label as='h4'>Text Input</Form.Label>
               <Form.Control as="textarea" rows={20} value={inputText} onChange={(e) => setInputText(e.target.value)}/>
@@ -114,8 +114,8 @@ const Summarization = () => {
             </div>
           </Form>
         </div>
-        <div className="col-lg-6 bg-light">
-          <Form>
+        <div className="col-lg-6">
+          <Form id="summary-output" className="bg-light rounded px-3 py-2">
             <Form.Group className="mb-2" controlId="output">
               <Form.Label as='h4'>Summary Output</Form.Label>
               <Form.Control as="textarea" plaintext readOnly rows={20} value={summary} onChange={(e) => setSummary(e.target.value)}/>
