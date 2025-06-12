@@ -6,11 +6,20 @@ import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { FaCopy, FaFileExport } from "react-icons/fa";
 import pdfToText from "../utils/pdfToText";
 import exportTextAsTxt from "../utils/exportTextAsTxt";
+import countWords from "../utils/countWords";
 
 const Summarization = () => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState("")
   const fileInputRef = useRef(null);
+
+  const wordCount = countWords(summary)
+  let wordLabel;
+  if (wordCount === 1) {
+    wordLabel = "word"
+  } else {
+    wordLabel = "words"
+  }
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
@@ -97,7 +106,7 @@ const Summarization = () => {
             </Form.Group>
             <div className="d-flex align-items-center justify-content-between">
               <div className="d-flex align-items-center py-2">
-                <span>1000</span>&nbsp;<span>words</span>
+                <span>{wordCount}</span>&nbsp;<span>{wordLabel}</span>
               </div>
               <div className="d-flex align-items-center">
                 <Button className="btn btn-danger d-flex align-items-center gap-2" onClick={handleCopy}>
