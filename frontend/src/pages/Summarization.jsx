@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner'
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
 import { FaCopy, FaFileExport } from "react-icons/fa";
@@ -12,6 +13,9 @@ const Summarization = () => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState("")
   const fileInputRef = useRef(null);
+
+  const [isParsing, setIsParsing] = useState(false)
+  const [isSummarizing, setIsSummarizing] = useState(false)
 
   const wordCount = countWords(summary)
   let wordLabel;
@@ -28,14 +32,17 @@ const Summarization = () => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file && file.type === 'application/pdf') {
+      setIsParsing(true)
       const text = await pdfToText(file);
       setInputText(text);
+      setIsParsing(false)
     } else {
       alert("Please upload a valid PDF file.")
     }
   };
 
   const handleSummarize = async () => {
+    setIsSummarizing(true)
     const response = await fetch("https://cs595-project.onrender.com/api/summarize", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,6 +50,7 @@ const Summarization = () => {
     });
     const data = await response.json();
     setSummary(data.summary);
+    setIsSummarizing(false)
   };
 
   const handleCopy = async () => {
@@ -85,7 +93,11 @@ const Summarization = () => {
                   onClick={handleUploadClick}
                 >
                   <AiOutlineCloudUpload size={20} />
-                  Upload Doc
+                  {isParsing ? (
+                    <>Parsing <Spinner animation="border" size="sm" /></>
+                  ) : (
+                    "Upload Doc"
+                  )}
                 </Button>
               </div>
               <Button 
@@ -93,7 +105,11 @@ const Summarization = () => {
                 onClick={handleSummarize}
               >
                 <HiOutlineDocumentDuplicate size={20} />
-                Summarize
+                {isSummarizing ? (
+                    <>Summarizing <Spinner animation="border" size="sm" /></>
+                  ) : (
+                    "Summarize"
+                  )}
               </Button>
             </div>
           </Form>
