@@ -43,14 +43,19 @@ const Summarization = () => {
 
   const handleSummarize = async () => {
     setIsSummarizing(true)
-    const response = await fetch("https://cs595-project.onrender.com/api/summarize", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: inputText }),
-    });
-    const data = await response.json();
-    setSummary(data.summary);
-    setIsSummarizing(false)
+    try {
+      const response = await fetch("https://cs595-project.onrender.com/api/summarize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: inputText }),
+      });
+      const data = await response.json();
+      setSummary(data.summary);
+    } catch (error) {
+      console.error("Summarization failed: ", error)
+    } finally {
+      setIsSummarizing(false)
+    }
   };
 
   const handleCopy = async () => {

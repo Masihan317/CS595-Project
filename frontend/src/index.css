@@ -3,6 +3,43 @@
   grid-template-columns: 1fr;
 }
 
+.flashcard-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 700px;
+  min-height: 600px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flashcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
 @media (min-width: 992px) {
   .layout-grid {
     grid-template-columns: 250px 1fr;
