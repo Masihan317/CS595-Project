@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors"
-import { summarizeWithGemini, generateFlashcards } from "./gemini.js";
+import { summarizeWithGemini, generateFlashcards, answerQuestionWithGemini  } from "./gemini.js";
 
 dotenv.config();
 
@@ -13,6 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const router = express.Router();
+
+// 🔹 In-memory note storage
+let savedNotes = "";
+
 
 router.post("/summarize", async (req, res) => {
   const { text } = req.body;
@@ -26,12 +30,17 @@ router.post("/summarize", async (req, res) => {
   }
 });
 
-app.use("/api", router);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// 🔸 (Optional) Separate route to save notes manually
+router.post("/save-notes", (req, res) => {
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ error: "Text is required." });
+
+  savedNotes = text;
+  res.json({ message: "Notes saved successfully." });
 });
 
+// flshcard endpoint 
 router.post("/flashcards", async (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: "Text is required" });
@@ -60,4 +69,27 @@ router.post("/flashcards", async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// Initial chatbot setup
+router.post("/chat", async (req, res) => {
+  const { question } = req.body;
+
+  if (!savedNotes || !question) {
+    return res.status(400).json({ error: "Missing question or notes not saved." });
+  }
+
+  try {
+    const answer = await answerQuestionWithGemini(savedNotes, question);
+    res.json({ answer });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.use("/api", router);
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
