@@ -55,4 +55,8 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
+
+  #flashcard-button-container {
+    flex-direction: column;
+  }
 }
