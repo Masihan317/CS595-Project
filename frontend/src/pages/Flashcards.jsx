@@ -105,14 +105,21 @@ const Flashcards = () => {
             </Form.Group>
           </Form>
         ) : (
-          <div className="d-flex flex-column align-items-center justify-content-between">
-            <Card onClick={() => setShowAnswer(!showAnswer)} className="w-100 shadow mb-3" style={{ minHeight: "600px", cursor: "pointer" }}>
-              <Card.Body className="d-flex align-items-center justify-content-center">
-                <Card.Text className="fs-1">
-                  {showAnswer ? flashcards[currentIndex].answer : flashcards[currentIndex].question}
-                </Card.Text>
-              </Card.Body>
-            </Card>
+          <div className="d-flex flex-column align-items-center justify-content-between gap-3">
+            <div
+              className="flashcard-container mb-3"
+              onClick={() => setShowAnswer(!showAnswer)}
+              style={{ cursor: "pointer" }}
+            >
+              <div className={`flashcard shadow ${showAnswer ? "flipped" : ""}`}>
+                <div className="flashcard-face">
+                  {flashcards[currentIndex].question}
+                </div>
+                <div className="flashcard-face flashcard-back">
+                  {flashcards[currentIndex].answer}
+                </div>
+              </div>
+            </div>
             <div id="flashcard-button-container" className="d-flex align-items-center justify-content-around w-100 gap-2">
               <div className="d-flex align-items-center justify-content-around w-100">
                 <Button
