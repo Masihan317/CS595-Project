@@ -5,7 +5,11 @@ import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner'
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { HiOutlineDocumentDuplicate } from "react-icons/hi2";
+import { FaLeftLong, FaRightLong } from "react-icons/fa6";
+import { RiArrowGoBackFill } from "react-icons/ri";
+import { FaFileExport } from "react-icons/fa";
 import pdfToText from "../utils/pdfToText";
+import exportFlashcardsAsTxt from "../utils/exportFlashcardsAsTxt";
 
 const Flashcards = () => {
   const [inputText, setInputText] = useState("");
@@ -52,6 +56,10 @@ const Flashcards = () => {
       setIsGeneratingFlashcards(false)
     }
   };
+
+  const handleExport = () => {
+    exportFlashcardsAsTxt(flashcards, "flashcards.txt")
+  }
 
   return (
     <div className="container-fluid">
@@ -105,21 +113,51 @@ const Flashcards = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <div className="d-flex align-items-center justify-content-around w-100">
-              <Button
-                onClick={() => {
-                  setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev))
-                  setShowAnswer(false)
-                }}
-                disabled={currentIndex === 0}
-              >Previous Flashcard</Button>
-              <Button
-                onClick={() => {
-                  setCurrentIndex((prev) => (prev < flashcards.length - 1 ? prev + 1 : prev))
-                  setShowAnswer(false)
-                }}
-                disabled={currentIndex === flashcards.length - 1}
-              >Next Flashcard</Button>
+            <div id="flashcard-button-container" className="d-flex align-items-center justify-content-around w-100 gap-2">
+              <div className="d-flex align-items-center justify-content-around w-100">
+                <Button
+                  className="btn d-flex align-items-center gap-2"
+                  onClick={() => {
+                    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev))
+                    setShowAnswer(false)
+                  }}
+                  disabled={currentIndex === 0}
+                >
+                  <FaLeftLong size={18} />
+                  Previous
+                </Button>
+                <Button
+                  className="btn d-flex align-items-center gap-2"
+                  onClick={() => {
+                    setCurrentIndex((prev) => (prev < flashcards.length - 1 ? prev + 1 : prev))
+                    setShowAnswer(false)
+                  }}
+                  disabled={currentIndex === flashcards.length - 1}
+                >
+                  <FaRightLong size={18} />
+                  Next
+                </Button>
+              </div>
+              <div className="d-flex align-items-center justify-content-evenly w-100">
+                <Button 
+                  className="btn btn-secondary d-flex align-items-center gap-2"
+                  onClick={() => {
+                    setCanShowFlashcards(false)
+                    setCurrentIndex(0)
+                    setShowAnswer(false)
+                  }}
+                >
+                  <RiArrowGoBackFill size={18} />
+                  Go Back
+                </Button>
+                <Button 
+                  className="btn btn-success d-flex align-items-center gap-2"
+                  onClick={handleExport}
+                >
+                  <FaFileExport size={16}/>
+                  Export
+                </Button>
+              </div>
             </div>
           </div>
         )}
