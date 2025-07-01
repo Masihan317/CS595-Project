@@ -71,16 +71,18 @@ router.post("/flashcards", async (req, res) => {
   }
 });
 
-// Initial chatbot setup
+// chatbot setup - code slightly updated by Sihan
 router.post("/chat", async (req, res) => {
   const { question } = req.body;
 
-  if (!savedNotes || !question) {
-    return res.status(400).json({ error: "Missing question or notes not saved." });
+  if (!question) {
+    return res.status(400).json({ error: "Question is required." });
   }
 
   try {
-    const answer = await answerQuestionWithGemini(savedNotes, question);
+    // Pass empty string or actual notes to Gemini
+    const notesContext = savedNotes || ""; 
+    const answer = await answerQuestionWithGemini(notesContext, question);
     res.json({ answer });
   } catch (err) {
     res.status(500).json({ error: err.message });
