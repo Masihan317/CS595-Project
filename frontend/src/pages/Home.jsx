@@ -1,7 +1,6 @@
 import { MdOutlineDocumentScanner } from "react-icons/md";
 import { PiCardsBold } from "react-icons/pi";
 import { RiRobot3Line } from "react-icons/ri";
-import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router";
 
