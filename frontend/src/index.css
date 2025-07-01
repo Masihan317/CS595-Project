@@ -60,6 +60,14 @@
     height: 100%;
     min-height: 100vh;
   }
+
+  #chatbot {
+    height: 100vh;
+  }
+
+  #chatbot-box {
+    min-height: 0;
+  }
 }
 
 @media (max-width: 991px) {
@@ -70,6 +78,15 @@
 
   #flashcard-button-container {
     flex-direction: column;
+  }
+
+  /* Removes the top height of sidebar */
+  #chatbot {
+    height: calc(100vh - 217px);
+  }
+
+  #chatbot-box {
+    min-height: 0;
   }
 }
 
