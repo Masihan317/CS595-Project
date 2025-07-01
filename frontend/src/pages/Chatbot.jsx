@@ -87,8 +87,8 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="container-fluid d-flex flex-column">
-      <div ref={chatRef} className="flex-grow-1 overflow-auto p-3 bg-light">
+    <div className="container-fluid d-flex flex-column p-3">
+      <div ref={chatRef} className="flex-grow-1 overflow-auto p-3 bg-light rounded">
         {messages.map((msg, index) => (
           <div
             key={index}
@@ -106,7 +106,7 @@ const Chatbot = () => {
           <div className="text-muted small">Chatbot is thinking...</div>
         )}
       </div>
-      <Form onSubmit={handleSubmit} className="border-top p-3">
+      <Form onSubmit={handleSubmit} className="pt-3">
         <div className="d-flex align-items-center justify-content-between gap-2">
           <Form.Control type="text" placeholder="Type Your Question Here..." value={questionInput} onChange={(e) => setQuestionInput(e.target.value)}></Form.Control>
           <input type="file" accept=".pdf" ref={fileInputRef} className="d-none" onChange={handleFileChange} />
