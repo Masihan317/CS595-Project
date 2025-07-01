@@ -17,7 +17,7 @@ const router = express.Router();
 // 🔹 In-memory note storage
 let savedNotes = "";
 
-
+// Sihan's endpoint - summarize notes with AI
 router.post("/summarize", async (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: "Text is required" });
@@ -40,7 +40,7 @@ router.post("/save-notes", (req, res) => {
   res.json({ message: "Notes saved successfully." });
 });
 
-// flshcard endpoint 
+// flashcard endpoint 
 router.post("/flashcards", async (req, res) => {
   const { text } = req.body;
   if (!text) return res.status(400).json({ error: "Text is required" });
@@ -71,18 +71,16 @@ router.post("/flashcards", async (req, res) => {
   }
 });
 
-// chatbot setup - code slightly updated by Sihan
+// Initial chatbot setup
 router.post("/chat", async (req, res) => {
   const { question } = req.body;
 
-  if (!question) {
-    return res.status(400).json({ error: "Question is required." });
+  if (!savedNotes || !question) {
+    return res.status(400).json({ error: "Missing question or notes not saved." });
   }
 
   try {
-    // Pass empty string or actual notes to Gemini
-    const notesContext = savedNotes || ""; 
-    const answer = await answerQuestionWithGemini(notesContext, question);
+    const answer = await answerQuestionWithGemini(savedNotes, question);
     res.json({ answer });
   } catch (err) {
     res.status(500).json({ error: err.message });
