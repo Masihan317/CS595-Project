@@ -87,8 +87,8 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="container-fluid d-flex flex-column p-3">
-      <div ref={chatRef} className="flex-grow-1 overflow-auto p-3 bg-light rounded">
+    <div id="chatbot" className="container-fluid d-flex flex-column p-3">
+      <div id="chatbot-box" ref={chatRef} className="flex-grow-1 overflow-auto p-3 bg-light rounded">
         {messages.map((msg, index) => (
           <div
             key={index}
