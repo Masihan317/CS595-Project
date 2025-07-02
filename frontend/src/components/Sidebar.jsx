@@ -2,6 +2,7 @@ import { Nav, Navbar } from 'react-bootstrap';
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { PiCardsThree } from "react-icons/pi";
 import { TbMessageChatbot } from "react-icons/tb";
+import { MdOutlineSignalCellularAlt } from "react-icons/md"; // آیکن دلخواه برای Difficulty
 import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
@@ -30,6 +31,12 @@ const Sidebar = () => {
         <Nav.Link href="/chatbot" active={pathname === "/chatbot"} className={getLinkClass("/chatbot")}>
           <TbMessageChatbot size={20} className="me-2" />
           Q&A Chatbot
+        </Nav.Link>
+        
+        {/* 👇 این رو اضافه کن */}
+        <Nav.Link href="/difficulty" active={pathname === "/difficulty"} className={getLinkClass("/difficulty")}>
+          <MdOutlineSignalCellularAlt size={20} className="me-2" />
+          Difficulty Checker
         </Nav.Link>
       </Nav>
     </div>

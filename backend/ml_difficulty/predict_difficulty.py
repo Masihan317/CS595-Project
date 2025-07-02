@@ -1,3 +1,4 @@
+from flask_cors import CORS
 from flask import Flask, request, jsonify
 import joblib
 
@@ -8,6 +9,7 @@ label_encoder = joblib.load("label_encoder.pkl")
 
 app = Flask(__name__)
 
+CORS(app)
 @app.route('/predict_difficulty', methods=['POST'])
 def predict_difficulty():
     data = request.get_json()
@@ -23,4 +25,4 @@ def predict_difficulty():
     return jsonify({"difficulty": label})  #  FIXED: Return with key 'difficulty'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+      app.run(debug=True, port=5002)
