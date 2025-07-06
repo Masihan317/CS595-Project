@@ -1,49 +1,55 @@
-# ✅ File: routes/topic_model.py
+# ✅ File: routes/topic_modeling.py (KeyBERT + De-duplication)
+
 import nltk
 import string
 from flask import Blueprint, request, jsonify
-from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.feature_extraction.text import TfidfVectorizer
+from keybert import KeyBERT
+from nltk.tokenize import TreebankWordTokenizer
+from difflib import SequenceMatcher
 
+# Download tokenizer once
 nltk.download("punkt")
 
-# Blueprint setup
+# Setup Blueprint
 topic_bp = Blueprint("topic_model", __name__)
+
+# Load tokenizer and model
+tokenizer = TreebankWordTokenizer()
+model = KeyBERT()
 
 # Preprocessing function
 def preprocess(text):
-    tokens = nltk.word_tokenize(text.lower())
+    tokens = tokenizer.tokenize(text.lower())
     tokens = [t for t in tokens if t not in string.punctuation]
     return " ".join(tokens)
 
-# Route to extract topics
+# Helper to check similarity
+def is_similar(a, b, threshold=0.75):
+    return SequenceMatcher(None, a, b).ratio() > threshold
+
+# Route to extract clean keywords
 @topic_bp.route("/topic-model", methods=["POST"])
 def topic_model():
     data = request.get_json()
-    texts = data.get("texts")
+    note = data.get("text")
 
-    if not texts or not isinstance(texts, list):
-        return jsonify({"error": "A list of texts is required."}), 400
+    if not note or not isinstance(note, str):
+        return jsonify({"error": "A single text note is required."}), 400
 
-    # Clean the text data
-    cleaned = [preprocess(t) for t in texts]
+    cleaned = preprocess(note)
 
-    # TF-IDF Vectorization
-    vectorizer = TfidfVectorizer(stop_words="english")
-    X = vectorizer.fit_transform(cleaned)
+    # Extract top N keywords/phrases
+    raw_keywords = model.extract_keywords(
+        cleaned,
+        keyphrase_ngram_range=(1, 2),
+        stop_words="english",
+        top_n=10
+    )
 
-    # LDA Model
-    lda = LatentDirichletAllocation(n_components=5, random_state=42)
-    lda.fit(X)
+    # De-duplicate similar phrases
+    filtered_keywords = []
+    for kw, _ in raw_keywords:
+        if not any(is_similar(kw, existing) for existing in filtered_keywords):
+            filtered_keywords.append(kw)
 
-    feature_names = vectorizer.get_feature_names_out()
-    topics = []
-
-    for idx, topic in enumerate(lda.components_):
-        keywords = [feature_names[i] for i in topic.argsort()[-5:][::-1]]
-        topics.append({
-            "topic_num": idx + 1,
-            "keywords": keywords
-        })
-
-    return jsonify({"topics": topics})
+    return jsonify({"keywords": filtered_keywords})
