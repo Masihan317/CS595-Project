@@ -32,8 +32,6 @@ const Sidebar = () => {
           <TbMessageChatbot size={20} className="me-2" />
           Q&A Chatbot
         </Nav.Link>
-        
-        {/* 👇 این رو اضافه کن */}
         <Nav.Link href="/difficulty" active={pathname === "/difficulty"} className={getLinkClass("/difficulty")}>
           <MdOutlineSignalCellularAlt size={20} className="me-2" />
           Difficulty Checker

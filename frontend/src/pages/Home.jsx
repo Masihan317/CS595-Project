@@ -1,6 +1,7 @@
 import { MdOutlineDocumentScanner } from "react-icons/md";
 import { PiCardsBold } from "react-icons/pi";
 import { RiRobot3Line } from "react-icons/ri";
+import { FaSignal } from "react-icons/fa6";
 import Carousel from 'react-bootstrap/Carousel';
 import { Link } from "react-router";
 
@@ -35,6 +36,16 @@ const Home = () => {
               <Link to="/chatbot" className="btn btn-warning">Try Chatbot</Link>
             </div>
           </Carousel.Item>
+          <Carousel.Item className="position-relative">
+            <img className="w-100" src="/difficulty-estimator.png" alt="Difficulty Estimator Banner Image" />
+            <div className="position-absolute top-50 start-0 translate-middle-y ps-5 text-start text-dark-emphasis" style={{ maxWidth: "35%" }}>
+              <h3 class="text-light">Effort Made Predictable.</h3>
+              <p class="carousel-body-text text-white">
+                Automatically assess the difficulty of any content — from beginner basics to advanced concepts — so you can study smarter, not harder.
+              </p>
+              <Link to="/difficulty" className="btn btn-info">Try Difficulty Estimator</Link>
+            </div>
+          </Carousel.Item>
         </Carousel>
       </div>
       <div className="row py-3 px-3">
@@ -53,6 +64,11 @@ const Home = () => {
             <RiRobot3Line className="h1 text-danger" />
             <h3 class="h5">Ask Me Anything</h3>
             <p class="main-body-text text-secondary">Stuck on a topic? Chat with your AI buddy to get clear, instant answers and explanations tailored to your study material.</p>
+          </div>
+          <div class="col-md mt-3">
+            <FaSignal className="h1 text-warning" />
+            <h3 class="h5">Difficulty Estimator</h3>
+            <p class="main-body-text text-secondary">Instantly rate how tough a phrase is. Drop in a sentence and get an easy, medium, or hard rating to guide your study focus.</p>
           </div>
         </section>
       </div>
