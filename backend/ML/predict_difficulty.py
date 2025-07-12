@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import joblib
+import os
 
 # Load trained components
 model = joblib.load("model.pkl")
@@ -20,7 +21,8 @@ def predict_difficulty():
     y_pred = model.predict(X)
     label = label_encoder.inverse_transform(y_pred)[0]
 
-    return jsonify({"difficulty": label})  #  FIXED: Return with key 'difficulty'
+    return jsonify({"difficulty": label})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Use environment variable PORT
+    app.run(host="0.0.0.0", port=port)

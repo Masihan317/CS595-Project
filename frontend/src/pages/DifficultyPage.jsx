@@ -7,12 +7,17 @@ const DifficultyPage = () => {
   const [result, setResult] = useState("");
 
   const handleCheck = async () => {
+    if (!text.trim()) {
+      setResult("Please enter or upload some text.");
+      return;
+    }
+
     try {
       const response = await axios.post("http://127.0.0.1:5002/predict_difficulty", { text });
       setResult(response.data.difficulty);
     } catch (error) {
       console.error("Error:", error);
-      setResult("Error");
+      setResult("Error connecting to backend.");
     }
   };
 
@@ -23,7 +28,7 @@ const DifficultyPage = () => {
     if (file.name.endsWith(".txt")) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setText(event.target.result);
+        setText(event.target.result.trim());
       };
       reader.readAsText(file);
     } else if (file.name.endsWith(".pdf")) {
@@ -36,9 +41,9 @@ const DifficultyPage = () => {
           const page = await pdf.getPage(i);
           const content = await page.getTextContent();
           const strings = content.items.map((item) => item.str);
-          fullText += strings.join(" ") + " ";
+          fullText += strings.join(" ").replace(/\s+/g, " ") + " ";
         }
-        setText(fullText);
+        setText(fullText.trim());
       };
       reader.readAsArrayBuffer(file);
     } else {
@@ -47,13 +52,14 @@ const DifficultyPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h1>Difficulty Checker</h1>
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows="4"
-        cols="50"
+        cols="60"
+        placeholder="Enter or upload your text..."
       />
       <br />
       <input type="file" accept=".txt,.pdf" onChange={handleFileUpload} />

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: flask-backend
+    env: python
+    buildCommand: ""
+    startCommand: python backend/ml_difficulty/predict_difficulty.py
+    plan: free
+    branch: main
+    runtime: python
+    region: oregon
+    rootDir: backend/ml_difficulty
