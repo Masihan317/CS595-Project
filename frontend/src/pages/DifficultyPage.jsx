@@ -13,7 +13,10 @@ const DifficultyPage = () => {
     }
 
     try {
-      const response = await axios.post("http://127.0.0.1:5002/predict_difficulty", { text });
+      const response = await axios.post(
+        "https://ml-backend-wof3.onrender.com/predict_difficulty", //Render
+        { text }
+      );
       setResult(response.data.difficulty);
     } catch (error) {
       console.error("Error:", error);
