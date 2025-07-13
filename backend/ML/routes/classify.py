@@ -11,8 +11,10 @@ nltk.download('punkt')
 classify_bp = Blueprint("classify", __name__)
 
 # Load model and vectorizer
-model_path = os.path.join("models", "classifier.pkl")
-vectorizer_path = os.path.join("models", "vectorizer.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "..", "models", "classifier.pkl")
+model_path = os.path.abspath(model_path)  # Ensures full path
+vectorizer_path = os.path.join(os.path.dirname(__file__), "..", "models", "vectorizer.pkl")
+vectorizer_path = os.path.abspath(vectorizer_path)
 
 classifier = joblib.load(model_path)
 vectorizer = joblib.load(vectorizer_path)
