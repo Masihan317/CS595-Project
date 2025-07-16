@@ -1,2 +1,4 @@
 venv/
 backend/ML/venv/
+.DS_Store
+venv/
