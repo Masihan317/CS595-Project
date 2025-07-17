@@ -43,7 +43,6 @@ regex==2024.11.6
 requests==2.32.4
 rich==14.0.0
 rpds-py==0.26.0
-safetensors==0.5.3
 scikit-learn==1.7.0
 scipy==1.16.0
 six==1.17.0
