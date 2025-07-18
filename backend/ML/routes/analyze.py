@@ -13,8 +13,8 @@ tokenizer = TreebankWordTokenizer()
 keybert_model = KeyBERT()
 
 # Load classifier
-classifier = joblib.load("models/classifier.pkl")
-vectorizer = joblib.load("models/vectorizer.pkl")
+classifier = joblib.load("backend/ML/models/classifier.pkl")
+vectorizer = joblib.load("backend/ML/models/vectorizer.pkl")
 
 # Preprocessing (same for both)
 def preprocess(text):

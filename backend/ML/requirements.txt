@@ -11,7 +11,7 @@ idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
 joblib==1.5.1
-keybert @ git+https://github.com/MaartenGr/KeyBERT.git@0.7.0
+git+https://github.com/MaartenGr/KeyBERT.git
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 mdurl==0.1.2
