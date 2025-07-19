@@ -12,6 +12,8 @@ import countWords from "../utils/countWords";
 const Summarization = () => {
   const [inputText, setInputText] = useState("");
   const [summary, setSummary] = useState("")
+  const [keywords, setKeywords] = useState("");
+  const [subject, setSubject] = useState("");
   const fileInputRef = useRef(null);
 
   const [isParsing, setIsParsing] = useState(false)
@@ -51,6 +53,22 @@ const Summarization = () => {
       });
       const data = await response.json();
       setSummary(data.summary);
+
+    const analysisRes = await fetch("https://cs595-project-ml.onrender.com/analyze-note", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: data.summary }),
+    });
+    const analysisData = await analysisRes.json();
+
+    if (Array.isArray(analysisData.keywords)) {
+      setKeywords(analysisData.keywords.join(", "));
+      setSubject(analysisData.subject || "");
+    } else {
+      setKeywords("No keywords found.");
+      setSubject("");
+    }
+
     } catch (error) {
       console.error("Summarization failed: ", error)
     } finally {
@@ -140,6 +158,26 @@ const Summarization = () => {
                 </Button>
               </div>
             </div>
+          </Form>
+        </div>
+      </div>
+      <div className="row mt-3 mb-3">
+        <div className="col">
+          <Form id="subject" className="bg-light rounded px-3 py-2">
+            <Form.Group className="mb-2" controlId="subject">
+              <Form.Label as='h4'>Subject</Form.Label>
+              <Form.Control as="textarea" plaintext readOnly value={subject} rows={3}/>
+            </Form.Group>
+          </Form>
+        </div>
+      </div>
+      <div className="row mt-3 mb-3">
+        <div className="col">
+          <Form id="keywords" className="bg-light rounded px-3 py-2">
+            <Form.Group className="mb-2" controlId="keywords">
+              <Form.Label as='h4'>Keywords</Form.Label>
+              <Form.Control as="textarea" plaintext readOnly value={keywords} rows={3}/>
+            </Form.Group>
           </Form>
         </div>
       </div>
