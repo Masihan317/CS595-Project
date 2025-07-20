@@ -4,3 +4,4 @@ joblib
 streamlit
 requests
 flask-cors
+gunicorn
