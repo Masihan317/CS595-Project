@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
 import * as pdfjsLib from "pdfjs-dist";
+import { postData } from "../utils/request";  //
 
 const DifficultyPage = () => {
   const [text, setText] = useState("");
@@ -13,10 +13,8 @@ const DifficultyPage = () => {
     }
 
     try {
-      const response = await axios.post(
-  "https://cs595-project-2.onrender.com/predict_difficulty",
-  { text }
-);      setResult(response.data.difficulty);
+      const response = await postData("predict_difficulty", { text });
+      setResult(response.difficulty);
     } catch (error) {
       console.error("Error:", error);
       setResult("Error connecting to backend.");
