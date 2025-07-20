@@ -14,7 +14,7 @@ const DifficultyPage = () => {
 
     try {
       const response = await axios.post(
-        "https://ml-backend-wof3.onrender.com/predict_difficulty", //Render
+        ""https://cs595-project-2.onrender.com/predict_difficulty", //Render
         { text }
       );
       setResult(response.data.difficulty);
