@@ -1,15 +1,14 @@
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 import joblib
-import os
+
+predict_bp = Blueprint('predict_bp', __name__)
 
 # Load trained components
 model = joblib.load("model.pkl")
 vectorizer = joblib.load("vectorizer.pkl")
 label_encoder = joblib.load("label_encoder.pkl")
 
-app = Flask(__name__)
-
-@app.route('/predict_difficulty', methods=['POST'])
+@predict_bp.route('/predict_difficulty', methods=['POST'])
 def predict_difficulty():
     data = request.get_json()
     text = data.get("text", "")
@@ -22,7 +21,3 @@ def predict_difficulty():
     label = label_encoder.inverse_transform(y_pred)[0]
 
     return jsonify({"difficulty": label})
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Use environment variable PORT
-    app.run(host="0.0.0.0", port=port)
