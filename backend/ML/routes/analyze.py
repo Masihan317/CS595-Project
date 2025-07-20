@@ -12,19 +12,21 @@ analyze_bp = Blueprint("analyze", __name__)
 tokenizer = TreebankWordTokenizer()
 keybert_model = KeyBERT()
 
-# Load classifier
-classifier = joblib.load("backend/ML/models/classifier.pkl")
-vectorizer = joblib.load("backend/ML/models/vectorizer.pkl")
+# Load classifier and vectorizer from correct relative path
+classifier = joblib.load("models/classifier.pkl")
+vectorizer = joblib.load("models/vectorizer.pkl")
 
-# Preprocessing (same for both)
+# Preprocessing function
 def preprocess(text):
     tokens = tokenizer.tokenize(text.lower())
     tokens = [t for t in tokens if t not in string.punctuation]
     return " ".join(tokens)
 
+# Check similarity between keywords
 def is_similar(a, b, threshold=0.75):
     return SequenceMatcher(None, a, b).ratio() > threshold
 
+# Route for analyzing notes
 @analyze_bp.route("/analyze-note", methods=["POST"])
 def analyze_note():
     data = request.get_json()
