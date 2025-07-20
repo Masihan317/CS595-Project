@@ -11,5 +11,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {}
-  }
+  },
+  base: "./" // Add this line
 });
