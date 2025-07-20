@@ -23,7 +23,9 @@ def predict_difficulty():
     label = label_encoder.inverse_transform(y_pred)[0]
 
     return jsonify({"difficulty": label})
-
+@app.route("/", methods=["GET"])
+def home():
+    return "✅ ML Difficulty API is running!"
 if __name__ == '__main__':
     import os
     port = int(os.environ.get("PORT", 10000))  # 10000 or whatever Render assigns
