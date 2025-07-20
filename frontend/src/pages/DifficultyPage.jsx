@@ -14,10 +14,9 @@ const DifficultyPage = () => {
 
     try {
       const response = await axios.post(
-        ""https://cs595-project-2.onrender.com/predict_difficulty", //Render
-        { text }
-      );
-      setResult(response.data.difficulty);
+  "https://cs595-project-2.onrender.com/predict_difficulty",
+  { text }
+);      setResult(response.data.difficulty);
     } catch (error) {
       console.error("Error:", error);
       setResult("Error connecting to backend.");
