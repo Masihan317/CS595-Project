@@ -166,7 +166,7 @@ const Summarization = () => {
           <Form id="subject" className="bg-light rounded px-3 py-2">
             <Form.Group className="mb-2" controlId="subject">
               <Form.Label as='h4'>Subject</Form.Label>
-              <Form.Control as="textarea" plaintext readOnly value={subject} rows={3}/>
+              <Form.Control as="textarea" plaintext readOnly value={subject} rows={1}/>
             </Form.Group>
           </Form>
         </div>
