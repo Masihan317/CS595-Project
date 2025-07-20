@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist";
-import { postData } from "../utils/request";  //
+import { postData } from "../utils/request";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 const DifficultyPage = () => {
   const [text, setText] = useState("");
