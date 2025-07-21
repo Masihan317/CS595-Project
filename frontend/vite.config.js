@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {}
   },
-  base: "./",
+  base: "/",
   server: {
     historyApiFallback: true
   }
